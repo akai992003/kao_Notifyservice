@@ -12,7 +12,7 @@ namespace NotifyService.Controllers {
         private IhnNotifyItemService _IhnNotifyItemService;
         private IhnNotifyService _IhnNotifyService;
         private IMemberService _IMemberService;
-
+//test git hub
         public ItemController (IhnNotifyItemService IhnNotifyItemService,
             IhnNotifyService IhnNotifyService,
             IMemberService IMemberService) {
