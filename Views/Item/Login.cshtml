@@ -1,0 +1,16 @@
+
+@model NotifyService.Data.Members
+<!-- 對應要使用的model -->
+@using (Html.BeginForm("Login", "Item", FormMethod.Post, null))
+{
+    <!-- button的submit呼叫using裡面的Login，login對應Itemcontroller裡面的IActionResult的function名稱
+        name的名稱主要對應model的屬性名稱
+    -->
+
+    <input id="account" name = "account">
+    <input id="password" name = "password">
+    <button type="submit" id="btnLogin" name="btnLogin">login</button>
+
+    <br/>
+    <h1>@ViewBag.result</h1>
+}

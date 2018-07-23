@@ -1,0 +1,35 @@
+
+@model IEnumerable<NotifyService.Data.hnNotifyItem>
+
+<table class="table device-table table-striped">
+            <thead>
+                <tr>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.counter)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.name)
+                    </th>
+
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                 
+
+                <tr>
+                  
+                    <td style="text-align:center" hidden>
+                        @Html.DisplayFor(modelItem => item.counter)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+
+                  
+                </tr>
+                }
+            </tbody>
+        </table>

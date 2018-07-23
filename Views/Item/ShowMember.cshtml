@@ -1,0 +1,44 @@
+@model NotifyService.Data.DTOhnNotifyItemUser
+
+@using (Html.BeginForm("ShowMember", "Item", FormMethod.Post, null))
+{
+
+
+    <input type="hidden" name="member_counter" value='@Model.member_counter'/>
+    <table class="table device-table table-striped">
+        <thead>
+            <tr>
+                <th hidden></th>
+                <th>name </th>
+                <th>Line</th>
+                <th>Mail</th>
+                <th>Message</th>     
+            </tr>
+        </thead>
+        <tbody>
+         
+            @{
+                int i = 0;
+            }
+            @foreach (var p in Model.DTOhnNotifyItems)
+            {
+                <tr>
+                    @Html.Hidden("DTOhnNotifyItems[" + i + "].counter", p.counter)
+                    <td>@Html.TextBox("DTOhnNotifyItems[" + i + "].name", p.name)</td> 
+                    <td style="text-align:center">
+                        @Html.CheckBox("DTOhnNotifyItems[" + i + "].Line", p.Line)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.CheckBox("DTOhnNotifyItems[" + i + "].Mail", p.Mail)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.CheckBox("DTOhnNotifyItems[" + i + "].Message", p.Message)
+                    </td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+
+    <input type="submit" value="SAVE"/>
+}

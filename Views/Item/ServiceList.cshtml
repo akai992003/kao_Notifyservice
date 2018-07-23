@@ -1,0 +1,30 @@
+@model List<NotifyService.Data.USERSERVICEORDER>
+
+<p>@ViewBag.member_counter</p> 
+<!-- @using (Html.BeginForm("ShowMember", "Item", FormMethod.Post, null))
+{
+
+    
+} -->
+@{
+string a = "";
+
+}
+@foreach (var p in Model)
+{
+    if (a != p.actionName){
+        a = p.actionName;
+        
+         <H2>@a 通知</H2>
+         
+    } 
+ 
+    <p>@p.serviceName</p> 
+    @Html.ActionLink("Delete", "DeleteNotify", "Item",
+    new{member_counter = @ViewBag.member_counter ,serviceName = p.serviceName,actionName = p.actionName})
+
+    
+
+}
+
+
