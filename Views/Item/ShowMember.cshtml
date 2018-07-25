@@ -1,15 +1,26 @@
 @model NotifyService.Data.DTOhnNotifyItemUser
-
+<script>
+    function CheckAllBox()
+    {
+        for (let i = 0; i < 5; i++) {
+            //const element = array[i];
+            var g = "DTOhnNotifyItems["+i+"].Line";
+            console.log(document.getElementsByName(g));
+            //document.getElementsByName(g).value = ;
+            document.getElementsByName(g).checked = "checked";
+        }
+    }
+</script>
 @using (Html.BeginForm("ShowMember", "Item", FormMethod.Post, null))
 {
 
 
     <input type="hidden" name="member_counter" value='@Model.member_counter'/>
-    <table class="table device-table table-striped">
+    <table class="table table-sm">
         <thead>
             <tr>
                 <th hidden></th>
-                <th>name </th>
+                <th>服務名稱 </th>
                 <th>Line</th>
                 <th>Mail</th>
                 <th>Message</th>     
@@ -24,7 +35,7 @@
             {
                 <tr>
                     @Html.Hidden("DTOhnNotifyItems[" + i + "].counter", p.counter)
-                    <td>@Html.TextBox("DTOhnNotifyItems[" + i + "].name", p.name)</td> 
+                    <td>@Html.Label("DTOhnNotifyItems[" + i + "].name", p.name)</td> 
                     <td style="text-align:center">
                         @Html.CheckBox("DTOhnNotifyItems[" + i + "].Line", p.Line)
                     </td>
@@ -40,5 +51,6 @@
         </tbody>
     </table>
 
-    <input type="submit" value="SAVE"/>
+    <input type="submit" value="SAVE"class="btn btn-primary"/>
+    <input type="button" value="checkall"class="btn btn-primary" onclick="CheckAllBox()"/>
 }

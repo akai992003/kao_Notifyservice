@@ -20,6 +20,7 @@ namespace NotifyService.Data {
         Task<List<DTOhnNotifyItem>> ShowMemberItem (int member_counter);
         void UpdateNotifyMember (DTOhnNotifyItemUser dto);
         List<USERSERVICEORDER> ShowMemberOrderItem (int member_counter);
+        Task delUserServiceOrder (int member_counter, string actionName, string serviceName);
     }
     public class hnNotifyService : IhnNotifyService {
         private NotifyContext _dbconn;
@@ -43,35 +44,34 @@ namespace NotifyService.Data {
         }
         public List<USERSERVICEORDER> ShowMemberOrderItem (int member_counter) {
             NotifyContext db = this._dbconn;
-            var q = (from p in db.hnNotify join p2 in db.hnNotifyItem on p.hnNotifyItem_counter equals p2.counter where p.deleted == 0 && p.member_counter == member_counter 
-            
-            select new {
-                Line = p.Line,
-                    Mail = p.Mail,
-                    Message = p.Message,
-                    serviceName = p2.name
-            }).AsEnumerable ();
+            var q = (from p in db.hnNotify join p2 in db.hnNotifyItem on p.hnNotifyItem_counter equals p2.counter where p.deleted == 0 && p.member_counter == member_counter
+
+                select new {
+                    Line = p.Line,
+                        Mail = p.Mail,
+                        Message = p.Message,
+                        serviceName = p2.name
+                }).AsEnumerable ();
 
             List<USERSERVICEORDER> l = new List<USERSERVICEORDER> ();
             foreach (var p in q) {
-               
 
                 if (p.Line == 1) {
-                     USERSERVICEORDER d = new USERSERVICEORDER ();
+                    USERSERVICEORDER d = new USERSERVICEORDER ();
                     d.actionName = "Line";
                     d.serviceName = p.serviceName;
                     l.Add (d);
                 }
 
                 if (p.Mail == 1) {
-                     USERSERVICEORDER d = new USERSERVICEORDER ();
+                    USERSERVICEORDER d = new USERSERVICEORDER ();
                     d.actionName = "Mail";
                     d.serviceName = p.serviceName;
                     l.Add (d);
                 }
 
                 if (p.Message == 1) {
-                     USERSERVICEORDER d = new USERSERVICEORDER ();
+                    USERSERVICEORDER d = new USERSERVICEORDER ();
                     d.actionName = "Message";
                     d.serviceName = p.serviceName;
                     l.Add (d);
@@ -79,7 +79,7 @@ namespace NotifyService.Data {
 
             }
 
-            l=l.OrderBy(c=>c.actionName).ToList();
+            l = l.OrderBy (c => c.actionName).ToList ();
             return l;
         }
 
@@ -190,6 +190,30 @@ namespace NotifyService.Data {
                 }
                 db.SaveChanges ();
             }
+
+        }
+        public async Task delUserServiceOrder (int member_counter, string actionName, string serviceName) {
+            NotifyContext db = this._dbconn;
+
+            var q1 = (from p in db.hnNotifyItem where p.name == serviceName select p).AsEnumerable ().FirstOrDefault ();
+            var q = (from p in db.hnNotify where p.member_counter == member_counter && p.hnNotifyItem_counter == q1.counter select p)
+                .AsEnumerable ().FirstOrDefault ();
+            var a = db.hnNotify.Find(q.counter);
+            db.hnNotify.Attach (a);
+            if (actionName == "Line")
+            {
+               a.Line = 0;
+            }
+            if (actionName == "Mail")
+            {
+               a.Mail = 0;
+            }
+            if (actionName == "Message")
+            {
+               a.Message = 0;
+            }
+
+            await db.SaveChangesAsync ();
 
         }
 

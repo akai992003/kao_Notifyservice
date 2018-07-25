@@ -14,16 +14,18 @@ string a = "";
 {
     if (a != p.actionName){
         a = p.actionName;
-        
-         <H2>@a 通知</H2>
-         
+         <div class="alert alert-primary" role="alert">@a 通知</div>
     } 
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            @p.serviceName
+        </div>
+         <div class="col-lg-4 col-md-4 col-sm-12">
+            @Html.ActionLink("Delete", "DeleteNotify", "Item",new{member_counter = @ViewBag.member_counter ,serviceName = p.serviceName,actionName = p.actionName},new{@class="btn btn-outline-danger"})
+        </div>
+    </div>
  
-    <p>@p.serviceName</p> 
-    @Html.ActionLink("Delete", "DeleteNotify", "Item",
-    new{member_counter = @ViewBag.member_counter ,serviceName = p.serviceName,actionName = p.actionName})
-
-    
+    <br>
 
 }
 

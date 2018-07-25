@@ -6,11 +6,23 @@
     <!-- button的submit呼叫using裡面的Login，login對應Itemcontroller裡面的IActionResult的function名稱
         name的名稱主要對應model的屬性名稱
     -->
-
-    <input id="account" name = "account">
-    <input id="password" name = "password">
-    <button type="submit" id="btnLogin" name="btnLogin">login</button>
-
-    <br/>
-    <h1>@ViewBag.result</h1>
+<div class="container">
+  <div class="form-group">
+    <label for="account">請輸入帳號</label>
+    <input type="text" class="form-control" id="account" name = "account" placeholder="輸入系統登入帳號">
+    <small id="emailHelp" class="form-text text-muted">帳號欄位為必填</small>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" name = "password" placeholder="密碼">
+  </div>
+  <!-- <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div> -->
+  <button type="submit" class="btn btn-primary" id="btnLogin" name="btnLogin">登入</button>
+<h1>@ViewBag.result</h1>
+</div>
 }
+
+

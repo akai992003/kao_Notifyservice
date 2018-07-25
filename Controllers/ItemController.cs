@@ -12,13 +12,17 @@ namespace NotifyService.Controllers {
         private IhnNotifyItemService _IhnNotifyItemService;
         private IhnNotifyService _IhnNotifyService;
         private IMemberService _IMemberService;
+
+        
 //test git hub
         public ItemController (IhnNotifyItemService IhnNotifyItemService,
             IhnNotifyService IhnNotifyService,
-            IMemberService IMemberService) {
+            IMemberService IMemberService) 
+        {
             this._IhnNotifyItemService = IhnNotifyItemService;
             this._IhnNotifyService = IhnNotifyService;
             this._IMemberService = IMemberService;
+
         }
         public async Task<IActionResult> Index () {
             var q = await this._IhnNotifyItemService.ShowItem ();
@@ -63,9 +67,11 @@ namespace NotifyService.Controllers {
         //     ViewData["name"] = name;
         //     return View ();
         // }
+
+        //在login之後撈出服務項目(針對membercounter)
          public IActionResult ServiceList (int membercounter) {
             int _membercounter = membercounter;
-           
+           //宣告_membercounter=membercounter
             var q = this._IhnNotifyService.ShowMemberOrderItem(_membercounter);
             ViewBag.member_counter = _membercounter;
             return View (q);
@@ -102,8 +108,9 @@ namespace NotifyService.Controllers {
 
         }
 
-        public IActionResult DeleteNotify(int member_counter,string serviceName,string actionName){
-                return View ();
+        public async Task<IActionResult> DeleteNotify(int member_counter,string serviceName,string actionName){
+              await  this._IhnNotifyService.delUserServiceOrder(member_counter,actionName,serviceName);
+                return RedirectToAction ("ServiceList", "Item", new { membercounter = member_counter});
         }
     }
 }
